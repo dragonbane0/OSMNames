@@ -1,0 +1,124 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2006
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OSMNames", "OSMNames", "{44987035-CFCA-43B2-A780-8E878585C518}"
+	ProjectSection(SolutionItems) = preProject
+		..\.env = ..\.env
+		..\docker-compose.yml = ..\docker-compose.yml
+		..\data\import\mapping.yml = ..\data\import\mapping.yml
+		..\run.py = ..\run.py
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{DD54C971-2164-4149-BEED-8D9519F74E9F}"
+	ProjectSection(SolutionItems) = preProject
+		__init__.py = __init__.py
+		consistency_check.py = consistency_check.py
+		logger.py = logger.py
+		settings.py = settings.py
+		settings_default.py = settings_default.py
+		settings_testing.py = settings_testing.py
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "database", "database", "{CFC804CD-2D16-4D6F-8614-83BD1078AB1C}"
+	ProjectSection(SolutionItems) = preProject
+		database\__init__.py = database\__init__.py
+		database\connection.py = database\connection.py
+		database\functions.py = database\functions.py
+		database\tables.py = database\tables.py
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "export_osmnames", "export_osmnames", "{2BCC0A8C-F10A-4107-933E-179BA7260593}"
+	ProjectSection(SolutionItems) = preProject
+		export_osmnames\__init__.py = export_osmnames\__init__.py
+		export_osmnames\create_geonames_view.sql = export_osmnames\create_geonames_view.sql
+		export_osmnames\create_housenumbers_view.sql = export_osmnames\create_housenumbers_view.sql
+		export_osmnames\create_linestrings_view.sql = export_osmnames\create_linestrings_view.sql
+		export_osmnames\create_merged_linestrings_view.sql = export_osmnames\create_merged_linestrings_view.sql
+		export_osmnames\create_points_view.sql = export_osmnames\create_points_view.sql
+		export_osmnames\create_polygons_view.sql = export_osmnames\create_polygons_view.sql
+		export_osmnames\export_osmnames.py = export_osmnames\export_osmnames.py
+		export_osmnames\functions.sql = export_osmnames\functions.sql
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "import_osm", "import_osm", "{9FE10303-FCE9-4019-A44E-2ED03EFD4C04}"
+	ProjectSection(SolutionItems) = preProject
+		import_osm\__init__.py = import_osm\__init__.py
+		import_osm\import_osm.py = import_osm\import_osm.py
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "init_database", "init_database", "{C4F02CB1-3860-4B9E-9C0F-468E171AB0C7}"
+	ProjectSection(SolutionItems) = preProject
+		init_database\__init__.py = init_database\__init__.py
+		init_database\create_custom_types.sql = init_database\create_custom_types.sql
+		init_database\init_database.py = init_database\init_database.py
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "import_wikipedia", "import_wikipedia", "{9003E1A0-9FC9-487E-9950-5677C3108119}"
+	ProjectSection(SolutionItems) = preProject
+		import_wikipedia\__init__.py = import_wikipedia\__init__.py
+		import_wikipedia\import_wikipedia.py = import_wikipedia\import_wikipedia.py
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "prepare_data", "prepare_data", "{726B5640-1473-4E25-AEE1-52386A75BDF8}"
+	ProjectSection(SolutionItems) = preProject
+		prepare_data\__init__.py = prepare_data\__init__.py
+		prepare_data\add_missing_streetnames_postcodes.sql = prepare_data\add_missing_streetnames_postcodes.sql
+		prepare_data\create_custom_columns.sql = prepare_data\create_custom_columns.sql
+		prepare_data\create_hierarchy.py = prepare_data\create_hierarchy.py
+		prepare_data\delete_unusable_entries.sql = prepare_data\delete_unusable_entries.sql
+		prepare_data\determine_linked_places.sql = prepare_data\determine_linked_places.sql
+		prepare_data\merge_corresponding_linestrings.sql = prepare_data\merge_corresponding_linestrings.sql
+		prepare_data\merge_duplicate_stations.sql = prepare_data\merge_duplicate_stations.sql
+		prepare_data\prepare_data.py = prepare_data\prepare_data.py
+		prepare_data\prepare_housenumbers.py = prepare_data\prepare_housenumbers.py
+		prepare_data\set_country_codes.sql = prepare_data\set_country_codes.sql
+		prepare_data\set_names.py = prepare_data\set_names.py
+		prepare_data\set_place_parentInfo.sql = prepare_data\set_place_parentInfo.sql
+		prepare_data\set_place_ranks.sql = prepare_data\set_place_ranks.sql
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "set_names", "set_names", "{F0A95327-6891-46E4-9936-D6674B825399}"
+	ProjectSection(SolutionItems) = preProject
+		prepare_data\set_names\set_linestring_names_from_relations.sql = prepare_data\set_names\set_linestring_names_from_relations.sql
+		prepare_data\set_names\set_names_from_tags.sql = prepare_data\set_names\set_names_from_tags.sql
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "prepare_housenumbers", "prepare_housenumbers", "{109A6FF3-8F94-40F6-854F-04047D514875}"
+	ProjectSection(SolutionItems) = preProject
+		prepare_data\prepare_housenumbers\normalize_street_names.sql = prepare_data\prepare_housenumbers\normalize_street_names.sql
+		prepare_data\prepare_housenumbers\sanitize_housenumbers.sql = prepare_data\prepare_housenumbers\sanitize_housenumbers.sql
+		prepare_data\prepare_housenumbers\set_street_attributes_by_nearest_street.sql = prepare_data\prepare_housenumbers\set_street_attributes_by_nearest_street.sql
+		prepare_data\prepare_housenumbers\set_street_attributes_by_street_relation_members.sql = prepare_data\prepare_housenumbers\set_street_attributes_by_street_relation_members.sql
+		prepare_data\prepare_housenumbers\set_street_ids_by_street_name.sql = prepare_data\prepare_housenumbers\set_street_ids_by_street_name.sql
+		prepare_data\prepare_housenumbers\set_street_names_by_relation_attributes.sql = prepare_data\prepare_housenumbers\set_street_names_by_relation_attributes.sql
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "create_hierarchy", "create_hierarchy", "{A7A5962D-223D-45BF-AAC3-B00AC9AFA42D}"
+	ProjectSection(SolutionItems) = preProject
+		prepare_data\create_hierarchy\cluster_geometries.sql = prepare_data\create_hierarchy\cluster_geometries.sql
+		prepare_data\create_hierarchy\set_geometry_centers.sql = prepare_data\create_hierarchy\set_geometry_centers.sql
+		prepare_data\create_hierarchy\set_parent_ids.sql = prepare_data\create_hierarchy\set_parent_ids.sql
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{DD54C971-2164-4149-BEED-8D9519F74E9F} = {44987035-CFCA-43B2-A780-8E878585C518}
+		{CFC804CD-2D16-4D6F-8614-83BD1078AB1C} = {DD54C971-2164-4149-BEED-8D9519F74E9F}
+		{2BCC0A8C-F10A-4107-933E-179BA7260593} = {DD54C971-2164-4149-BEED-8D9519F74E9F}
+		{9FE10303-FCE9-4019-A44E-2ED03EFD4C04} = {DD54C971-2164-4149-BEED-8D9519F74E9F}
+		{C4F02CB1-3860-4B9E-9C0F-468E171AB0C7} = {DD54C971-2164-4149-BEED-8D9519F74E9F}
+		{9003E1A0-9FC9-487E-9950-5677C3108119} = {DD54C971-2164-4149-BEED-8D9519F74E9F}
+		{726B5640-1473-4E25-AEE1-52386A75BDF8} = {DD54C971-2164-4149-BEED-8D9519F74E9F}
+		{F0A95327-6891-46E4-9936-D6674B825399} = {726B5640-1473-4E25-AEE1-52386A75BDF8}
+		{109A6FF3-8F94-40F6-854F-04047D514875} = {726B5640-1473-4E25-AEE1-52386A75BDF8}
+		{A7A5962D-223D-45BF-AAC3-B00AC9AFA42D} = {726B5640-1473-4E25-AEE1-52386A75BDF8}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {ABA6EAD9-ECFC-42F5-8BAE-92F992A8FFA7}
+	EndGlobalSection
+EndGlobal

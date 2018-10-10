@@ -5,19 +5,20 @@ SELECT
   alternative_names,
   'node'::TEXT as osm_type,
   osm_id::VARCHAR AS osm_id,
-  determine_class(type) AS class,
+  class,
   type,
   round(ST_X(ST_Transform(geometry, 4326))::numeric, 7) AS lon,
   round(ST_Y(ST_Transform(geometry, 4326))::numeric, 7) AS lat,
   place_rank,
-  get_importance(place_rank, wikipedia, parentInfo.country_code) AS importance,
-  NULL::TEXT AS street,
-  parentInfo.city AS city,
-  parentInfo.county AS county,
-  parentInfo.state AS state,
-  get_country_name(parentInfo.country_code) AS country,
-  parentInfo.country_code AS country_code,
-  parentInfo.displayName AS display_name,
+  importance,
+  streetName::TEXT AS street,
+  postCode::TEXT AS postal_code,
+  city,
+  county,
+  state,
+  get_country_name(countryCode) AS country,
+  countryCode::VARCHAR(2) AS country_code,
+  displayNameFinal AS display_name,
   round(ST_XMIN(ST_Transform(geometry, 4326))::numeric, 7) AS west,
   round(ST_YMIN(ST_Transform(geometry, 4326))::numeric, 7) AS south,
   round(ST_XMAX(ST_Transform(geometry, 4326))::numeric, 7) AS east,
@@ -27,6 +28,6 @@ SELECT
   NULL::VARCHAR AS housenumbers
 FROM
   osm_point,
-  get_parent_info(parent_id, name) as parentInfo
+  get_final_display_name(displayName, displayNameAttachments, class, streetName, houseNumberSingle, postCode) AS displayNameFinal
 WHERE
   linked IS FALSE;

@@ -57,11 +57,11 @@ def create_geonames_view():
 
 
 def export_geonames():
-    export_to_tsv("SELECT * FROM geonames_view ORDER BY importance DESC NULLS LAST", geonames_export_path())
+    export_to_tsv("SELECT name, alternative_names, osm_id, class, type, lon, lat, importance, street, postal_code, city, county, state, country_code, display_name, housenumbers FROM geonames_view ORDER BY importance DESC NULLS LAST", geonames_export_path())
 
 
 def export_housenumbers():
-    export_to_tsv("SELECT * FROM mv_housenumbers", housenumbers_export_path())
+    export_to_tsv("SELECT name, street_id, housenumber, lon, lat, importance FROM mv_housenumbers ORDER BY importance DESC NULLS LAST, street_id ASC", housenumbers_export_path())
 
 
 def export_to_tsv(query, path):

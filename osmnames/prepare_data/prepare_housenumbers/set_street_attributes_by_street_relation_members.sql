@@ -1,6 +1,7 @@
 UPDATE osm_housenumber AS housenumber
   SET street_id = COALESCE(street.merged_into, street.osm_id),
-      street = street.name
+      street = street.name,
+      importance = street.importance        
 FROM osm_relation_member AS housenumber_relation_member
   INNER JOIN osm_relation AS relation
     ON (relation.type = 'associatedStreet' OR relation.type = 'street')

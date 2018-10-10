@@ -6,6 +6,7 @@ from osmnames import settings
 def init_database():
     exists_query = "SELECT 1 AS result FROM pg_database WHERE datname='{}'".format(settings.get("DB_NAME"))
     if exists(exists_query, user="postgres", database="postgres"):
+        create_custom_types() # re-create custom types to allow changes
         print("skip database init, since it is already initialized")
         return
 

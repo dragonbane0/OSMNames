@@ -17,7 +17,18 @@ CREATE TABLE osm_merged_linestring AS
     max(a.wikidata) AS wikidata,
     st_simplify(st_collect(a.geometry), 10) AS geometry,
     min(a.place_rank) AS place_rank,
-    a.parent_id
+    max(a.importance) AS importance,
+    a.parent_id,
+	max(a.class) AS class,
+	max(a.streetName) AS streetName,
+	max(a.houseNumberSingle) AS houseNumberSingle,
+	max(a.postCode) AS postCode,
+	max(a.city) AS city,
+	max(a.county) AS county,
+	max(a.state) AS state,
+	max(a.countryCode) AS countryCode,
+	max(a.displayName) AS displayName,
+	max(a.displayNameAttachments) AS displayNameAttachments
   FROM
     osm_linestring AS a,
     osm_linestring AS b

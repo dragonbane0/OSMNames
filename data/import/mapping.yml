@@ -8,7 +8,7 @@ tables:
       type: geometry
     - name: type
       type: mapping_value
-    - key: name:en
+    - key: name:de
       name: name
       type: string
     - key: null
@@ -58,6 +58,9 @@ tables:
       - canal
       - drain
       - ditch
+      tourism:
+      - attraction
+       
   polygon:
     type: polygon
     fields:
@@ -71,7 +74,7 @@ tables:
       name: imported_country_code
       type: string
       key: ISO3166-1:alpha2
-    - key: name:en
+    - key: name:de
       name: name
       type: string
     - key: null
@@ -102,12 +105,49 @@ tables:
       - reservoir
       boundary:
       - administrative
+      - postal_code
       natural:
       - water
       - bay
       - desert
       highway:
       - pedestrian
+      aeroway:
+      - aerodrome
+      railway:
+      - station
+      tourism:
+      - viewpoint
+      - aquarium
+      - attraction
+      - camp_site
+      - gallery
+      - guest_house
+      - hostel
+      - hotel
+      - motel
+      - museum
+      - theme_park
+      - zoo
+      amenity:
+      - bar
+      - cafe
+      - restaurant
+      - college
+      - university
+      - ferry_terminal
+      - clinic
+      - dentist
+      - doctors
+      - hospital
+      - cinema
+      - nightclub
+      - planetarium
+      - theatre
+      shop:
+      - department_store
+      - mall
+
   point:
     type: point
     fields:
@@ -117,7 +157,7 @@ tables:
       type: geometry
     - name: type
       type: mapping_value
-    - key: name:en
+    - key: name:de
       name: name
       type: string
     - key: null
@@ -164,6 +204,46 @@ tables:
       - peak
       - volcano
       - hill
+      railway:
+      - station
+      - halt
+      - tram_stop
+      highway:
+      - bus_stop
+      aeroway:
+      - aerodrome
+      tourism:
+      - viewpoint
+      - aquarium
+      - attraction
+      - camp_site
+      - gallery
+      - guest_house
+      - hostel
+      - hotel
+      - motel
+      - museum
+      - theme_park
+      - zoo
+      amenity:
+      - bar
+      - cafe
+      - restaurant
+      - college
+      - university
+      - ferry_terminal
+      - clinic
+      - dentist
+      - doctors
+      - hospital
+      - cinema
+      - nightclub
+      - planetarium
+      - theatre
+      shop:
+      - department_store
+      - mall
+
   housenumber:
     type: geometry
     fields:
@@ -195,7 +275,7 @@ tables:
     columns:
     - name: osm_id
       type: id
-    - key: name:en
+    - key: name:de
       name: name
       type: string
     - key: type
@@ -223,7 +303,7 @@ tables:
       name: relation_type
       type: string
     - name: name
-      key: name:en
+      key: name:de
       type: string
       from_member: true
     mapping:
@@ -261,6 +341,7 @@ tables:
       - residential
       boundary:
       - administrative
+      - postal_code
       type:
       - associatedStreet
       - street

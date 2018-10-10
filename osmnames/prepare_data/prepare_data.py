@@ -15,7 +15,10 @@ def prepare_data():
     set_country_codes()
     determine_linked_places()
     create_hierarchy()
+    set_place_parentInfo()
+    add_missing_streetnames_postcodes()
     merge_corresponding_linestrings()
+    merge_duplicate_stations()
     prepare_housenumbers()
 
 
@@ -65,6 +68,21 @@ def determine_linked_places():
     vacuum_database()
 
 
+def set_place_parentInfo():
+    exec_sql_from_file("set_place_parentInfo.sql", cwd=os.path.dirname(__file__))
+    vacuum_database()
+
+
+def add_missing_streetnames_postcodes():
+    exec_sql_from_file("add_missing_streetnames_postcodes.sql", cwd=os.path.dirname(__file__))
+    vacuum_database()
+
+
 def merge_corresponding_linestrings():
     exec_sql_from_file("merge_corresponding_linestrings.sql", cwd=os.path.dirname(__file__))
+    vacuum_database()
+
+
+def merge_duplicate_stations():
+    exec_sql_from_file("merge_duplicate_stations.sql", cwd=os.path.dirname(__file__))
     vacuum_database()
