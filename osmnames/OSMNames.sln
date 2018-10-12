@@ -64,15 +64,15 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "prepare_data", "prepare_data", "{726B5640-1473-4E25-AEE1-52386A75BDF8}"
 	ProjectSection(SolutionItems) = preProject
 		prepare_data\__init__.py = prepare_data\__init__.py
-		prepare_data\add_missing_streetnames_postcodes.sql = prepare_data\add_missing_streetnames_postcodes.sql
+		prepare_data\add_missing_streetnames_postcodes_cities.sql = prepare_data\add_missing_streetnames_postcodes_cities.sql
 		prepare_data\create_custom_columns.sql = prepare_data\create_custom_columns.sql
 		prepare_data\create_hierarchy.py = prepare_data\create_hierarchy.py
 		prepare_data\delete_unusable_entries.sql = prepare_data\delete_unusable_entries.sql
 		prepare_data\determine_linked_places.sql = prepare_data\determine_linked_places.sql
 		prepare_data\merge_corresponding_linestrings.sql = prepare_data\merge_corresponding_linestrings.sql
-		prepare_data\merge_duplicate_stations.sql = prepare_data\merge_duplicate_stations.sql
 		prepare_data\prepare_data.py = prepare_data\prepare_data.py
 		prepare_data\prepare_housenumbers.py = prepare_data\prepare_housenumbers.py
+		prepare_data\remove_duplicate_entries.sql = prepare_data\remove_duplicate_entries.sql
 		prepare_data\set_country_codes.sql = prepare_data\set_country_codes.sql
 		prepare_data\set_names.py = prepare_data\set_names.py
 		prepare_data\set_place_parentInfo.sql = prepare_data\set_place_parentInfo.sql

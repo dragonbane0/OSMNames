@@ -28,4 +28,4 @@ SELECT
   get_housenumbers(osm_id) AS housenumbers
 FROM
   osm_merged_linestring,
-  get_final_display_name(displayName, displayNameAttachments, class, streetName, houseNumberSingle, postCode) AS displayNameFinal;
+  get_final_display_name(displayName, displayNameAttachments, class, streetName, houseNumberSingle, postCode, city) AS displayNameFinal;

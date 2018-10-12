@@ -16,9 +16,9 @@ def prepare_data():
     determine_linked_places()
     create_hierarchy()
     set_place_parentInfo()
-    add_missing_streetnames_postcodes()
+    add_missing_streetnames_postcodes_cities()
     merge_corresponding_linestrings()
-    merge_duplicate_stations()
+    remove_duplicate_entries()
     prepare_housenumbers()
 
 
@@ -73,8 +73,8 @@ def set_place_parentInfo():
     vacuum_database()
 
 
-def add_missing_streetnames_postcodes():
-    exec_sql_from_file("add_missing_streetnames_postcodes.sql", cwd=os.path.dirname(__file__))
+def add_missing_streetnames_postcodes_cities():
+    exec_sql_from_file("add_missing_streetnames_postcodes_cities.sql", cwd=os.path.dirname(__file__))
     vacuum_database()
 
 
@@ -83,6 +83,6 @@ def merge_corresponding_linestrings():
     vacuum_database()
 
 
-def merge_duplicate_stations():
-    exec_sql_from_file("merge_duplicate_stations.sql", cwd=os.path.dirname(__file__))
+def remove_duplicate_entries():
+    exec_sql_from_file("remove_duplicate_entries.sql", cwd=os.path.dirname(__file__))
     vacuum_database()

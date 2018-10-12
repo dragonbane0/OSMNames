@@ -28,6 +28,6 @@ SELECT
   NULL::VARCHAR AS housenumbers
 FROM
   osm_point,
-  get_final_display_name(displayName, displayNameAttachments, class, streetName, houseNumberSingle, postCode) AS displayNameFinal
+  get_final_display_name(displayName, displayNameAttachments, class, streetName, houseNumberSingle, postCode, city) AS displayNameFinal
 WHERE
   linked IS FALSE;

@@ -29,4 +29,4 @@ SELECT
 FROM
   osm_polygon,
   get_bounding_box(geometry, countryCode, admin_level) AS bounding_box,
-  get_final_display_name(displayName, displayNameAttachments, class, streetName, houseNumberSingle, postCode) AS displayNameFinal;
+  get_final_display_name(displayName, displayNameAttachments, class, streetName, houseNumberSingle, postCode, city) AS displayNameFinal;

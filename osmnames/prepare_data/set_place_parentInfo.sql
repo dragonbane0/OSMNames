@@ -80,15 +80,17 @@ BEGIN
     IF class = 'transport' THEN
 	  IF displayName = '' THEN
         displayName := current_name;
-      ELSIF current_rank <= 18 THEN
+      ELSIF current_rank <= 18 OR current_type IN ('village','hamlet') THEN
         EXIT WHEN current_rank = 4;
-        displayNameAttachments := array_append(displayNameAttachments, current_name);
+		displayNameAttachments := array_append(displayNameAttachments, to_char(current_rank, '999'));
+		displayNameAttachments := array_append(displayNameAttachments, current_name);
       END IF;      
     ELSE
 	  IF displayName = '' THEN
         displayName := current_name;
       ELSIF current_class = 'highway' IS FALSE AND current_rank <> 21 THEN
         EXIT WHEN current_rank = 4;
+        displayNameAttachments := array_append(displayNameAttachments, to_char(current_rank, '999'));
         displayNameAttachments := array_append(displayNameAttachments, current_name);
       END IF;
     END IF;	
@@ -98,7 +100,7 @@ BEGIN
 
     IF current_rank = 21 THEN
       postCode := current_name;
-    ELSIF current_rank BETWEEN 16 AND 22 THEN
+    ELSIF current_rank BETWEEN 16 AND 22 THEN --This is safe as postal_code is handled explicitly beforehand
       city := current_name;
       city_rank := current_rank;
     ELSIF (current_rank BETWEEN 10 AND city_rank) AND (county IS NULL) THEN
@@ -113,7 +115,7 @@ BEGIN
   importance := get_place_importance(rank, wikipedia, countryCode);
 
   --get feature postal_code from tags if available
-  IF postCode = '' IS NOT FALSE AND rank > 21 THEN
+  IF postCode = '' IS NOT FALSE AND rank > 20 THEN
     SELECT COALESCE(
                   all_tags -> 'postal_code',
                   all_tags -> 'addr:postcode')

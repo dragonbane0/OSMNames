@@ -1,7 +1,8 @@
-DROP FUNCTION IF EXISTS get_final_display_name(TEXT, TEXT[], TEXT, TEXT, TEXT, TEXT);
-CREATE FUNCTION get_final_display_name(displayName TEXT, displayNameAttachments TEXT[], class TEXT, streetName TEXT, houseNumberSingle TEXT, postCode TEXT)
+DROP FUNCTION IF EXISTS get_final_display_name(TEXT, TEXT[], TEXT, TEXT, TEXT, TEXT, TEXT);
+CREATE FUNCTION get_final_display_name(displayName TEXT, displayNameAttachments TEXT[], class TEXT, streetName TEXT, houseNumberSingle TEXT, postCode TEXT, city TEXT)
 RETURNS TEXT AS $$
 DECLARE
+  finalDisplayNameTags HSTORE;
   finalDisplayNameArray TEXT[];
   finalStreetName TEXT;
   finalDisplayName TEXT;
@@ -10,8 +11,14 @@ BEGIN
 
   IF class = 'transport' IS FALSE THEN
 
+    IF city IS NOT NULL AND city = '' IS FALSE THEN
+	  finalDisplayNameArray := array_prepend(city, finalDisplayNameArray); 
+	  finalDisplayNameArray := array_prepend('16', finalDisplayNameArray);
+    END IF;
+
     IF postCode IS NOT NULL AND postCode = '' IS FALSE THEN
-      finalDisplayNameArray := array_prepend(postCode, finalDisplayNameArray);	
+	  finalDisplayNameArray := array_prepend(postCode, finalDisplayNameArray); 
+	  finalDisplayNameArray := array_prepend('21', finalDisplayNameArray);
     END IF;
 
     IF streetName IS NOT NULL AND streetName = '' IS FALSE THEN
@@ -19,10 +26,27 @@ BEGIN
 	  IF houseNumberSingle IS NOT NULL AND houseNumberSingle = '' IS FALSE THEN
    	    finalStreetName := finalStreetName || ' ' || houseNumberSingle;
       END IF;
-      finalDisplayNameArray := array_prepend(finalStreetName, finalDisplayNameArray);	
+
+	  finalDisplayNameArray := array_prepend(finalStreetName, finalDisplayNameArray); 
+	  finalDisplayNameArray := array_prepend('26', finalDisplayNameArray);
     END IF;
 
   END IF;
+
+  finalDisplayNameTags := hstore(finalDisplayNameArray);
+
+  SELECT array_agg(value)
+  FROM 
+  (
+    SELECT *
+	FROM 
+    (
+	  SELECT DISTINCT ON (value) key, value FROM
+	  each(finalDisplayNameTags)
+    ) AS Sub1
+	ORDER BY key::INTEGER DESC
+  ) AS Sub2
+  INTO finalDisplayNameArray;
 
   finalDisplayNameArray := array_remove(finalDisplayNameArray, displayName);
   finalDisplayNameArray := array_prepend(displayName, finalDisplayNameArray);	

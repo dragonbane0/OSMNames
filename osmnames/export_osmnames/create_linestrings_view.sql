@@ -28,5 +28,5 @@ SELECT
   get_housenumbers(osm_id) AS housenumbers
 FROM
   osm_linestring,
-  get_final_display_name(displayName, displayNameAttachments, class, streetName, houseNumberSingle, postCode) AS displayNameFinal
+  get_final_display_name(displayName, displayNameAttachments, class, streetName, houseNumberSingle, postCode, city) AS displayNameFinal
 WHERE merged_into IS NULL;
