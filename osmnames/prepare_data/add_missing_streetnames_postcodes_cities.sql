@@ -141,6 +141,11 @@ UPDATE osm_point
 WHERE postCode IS NULL
 AND place_rank > 18;
 
+DO language plpgsql $$
+BEGIN
+  RAISE NOTICE 'contained_in_postal_boundary DONE';
+END
+$$;
 
 --Fill in missing street names from close-by streets with same parent (only for ranks > 19/village)
 UPDATE osm_polygon
@@ -160,6 +165,12 @@ UPDATE osm_point
 WHERE streetName IS NULL
       AND parent_id IS NOT NULL
 	  AND place_rank > 19;
+
+DO language plpgsql $$
+BEGIN
+  RAISE NOTICE 'nearest_street_get_name DONE';
+END
+$$;
 
 --Last attempt to fill in missing postal_codes from close-by polygons/streets/nodes regardless of parents (only for ranks > 22/neighbourhood)
 --Polygons
@@ -210,6 +221,11 @@ UPDATE osm_point
 WHERE postCode IS NULL
 	  AND place_rank > 22;
 
+DO language plpgsql $$
+BEGIN
+  RAISE NOTICE 'nearest_*_get_post DONE';
+END
+$$;
 
 --Fill in missing cities from close-by polygons/streets/nodes regardless of parents (only for ranks > 16/city)
 --Polygons
