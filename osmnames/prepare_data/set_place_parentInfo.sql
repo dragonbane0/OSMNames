@@ -88,7 +88,7 @@ BEGIN
     ELSE
 	  IF displayName = '' THEN
         displayName := current_name;
-      ELSIF current_class = 'highway' IS FALSE AND current_rank <> 21 THEN
+      ELSIF current_class = 'highway' IS FALSE AND current_rank <> 29 THEN --29: postCode
         EXIT WHEN current_rank = 4;
         displayNameAttachments := array_append(displayNameAttachments, to_char(current_rank, '999'));
         displayNameAttachments := array_append(displayNameAttachments, current_name);
@@ -98,9 +98,7 @@ BEGIN
     CONTINUE WHEN current_type IN ('water', 'bay', 'desert', 'reservoir', 'pedestrian');
     EXIT WHEN current_rank = 4;
 
-    IF current_rank = 21 THEN
-      postCode := current_name;
-    ELSIF current_rank BETWEEN 16 AND 22 THEN --This is safe as postal_code is handled explicitly beforehand
+    IF current_rank BETWEEN 16 AND 22 THEN
       city := current_name;
       city_rank := current_rank;
     ELSIF (current_rank BETWEEN 10 AND city_rank) AND (county IS NULL) THEN
@@ -115,7 +113,7 @@ BEGIN
   importance := get_place_importance(rank, wikipedia, countryCode);
 
   --get feature postal_code from tags if available
-  IF postCode = '' IS NOT FALSE AND rank > 20 THEN
+  IF postCode = '' IS NOT FALSE AND rank > 18 THEN
     SELECT COALESCE(
                   all_tags -> 'postal_code',
                   all_tags -> 'addr:postcode')
@@ -127,7 +125,7 @@ BEGIN
     streetName := displayName;
   END IF;
 
-  IF streetName = '' IS NOT FALSE AND rank > 21 THEN
+  IF streetName = '' IS NOT FALSE AND rank > 19 THEN
     SELECT COALESCE(
                   all_tags -> 'addr:street')
     INTO streetName;

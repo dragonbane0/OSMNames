@@ -3,8 +3,9 @@ import gzip
 import shutil
 from subprocess import check_call
 from osmnames.database.functions import exec_sql, exec_sql_from_file
-from osmnames import settings
+from osmnames import settings, logger
 
+log = logger.setup(__name__)
 
 def export_osmnames():
     create_functions()
@@ -13,6 +14,8 @@ def export_osmnames():
     export_geonames()
     export_housenumbers()
     gzip_tsv_files()
+
+    log.info("!!You are a true champion!!!")
 
 
 def create_functions():

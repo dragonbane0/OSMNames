@@ -16,12 +16,12 @@ BEGIN
     WHEN type IN ('town') THEN 18
     WHEN type IN ('village','hamlet','municipality','district','unincorporated_area','borough') THEN 19
     WHEN type IN ('suburb','subdivision','isolated_dwelling','farm','locality','islet','mountain_pass','hill') THEN 20
-	WHEN type IN ('postal_code') THEN 21
     WHEN type IN ('neighbourhood', 'residential','reservoir','stream') THEN 22
     WHEN type IN ('aerodrome','station','viewpoint','aquarium','attraction','camp_site','gallery','guest_house','hostel','hotel','motel','museum','theme_park','zoo','bar','cafe','restaurant','college','university','ferry_terminal','clinic','dentist','doctors','hospital','cinema','nightclub','planetarium','theatre','department_store','mall') THEN 23
     WHEN type IN ('motorway','trunk','primary','secondary','tertiary','unclassified','residential','road','living_street','raceway','construction','track','crossing','riverbank','canal') THEN 26
     WHEN type IN ('motorway_link','trunk_link','primary_link','secondary_link','tertiary_link','service','path','cycleway','steps','bridleway','footway','corridor','pedestrian') THEN 27
     WHEN type IN ('houses') THEN 28
+	WHEN type IN ('postal_code') THEN 29
     ELSE 30
   END;
 END;

@@ -1,11 +1,13 @@
 DROP FUNCTION IF EXISTS contained_in_postal_boundary(geometry);
 CREATE FUNCTION contained_in_postal_boundary(geometry_in GEOMETRY)
-RETURNS TABLE(postCode TEXT) AS $$
+RETURNS TABLE(postCode_out TEXT) AS $$
 BEGIN
   RETURN QUERY
   SELECT postal.postCode
     FROM osm_polygon AS postal
     WHERE type = 'postal_code'
+		  AND postCode IS NOT NULL 
+	      AND postCode = '' IS FALSE
           AND st_contains(geometry, geometry_in)
     LIMIT 1;
 END;
@@ -14,12 +16,14 @@ $$ LANGUAGE plpgsql IMMUTABLE;
 --Poly functions
 DROP FUNCTION IF EXISTS nearest_poly_get_post(geometry);
 CREATE FUNCTION nearest_poly_get_post(geometry_in GEOMETRY)
-RETURNS TABLE(postCode TEXT) AS $$
+RETURNS TABLE(postCode_out TEXT) AS $$
 BEGIN
   RETURN QUERY
   SELECT poly.postCode
     FROM osm_polygon AS poly
-    WHERE st_dwithin(geometry, geometry_in, 1000)
+    WHERE postCode IS NOT NULL 
+	      AND postCode = '' IS FALSE
+	      AND st_dwithin(geometry, geometry_in, 1000)
     ORDER BY st_distance(geometry, geometry_in) ASC
     LIMIT 1;
 END;
@@ -27,12 +31,14 @@ $$ LANGUAGE plpgsql IMMUTABLE;
 
 DROP FUNCTION IF EXISTS nearest_poly_get_city(geometry);
 CREATE FUNCTION nearest_poly_get_city(geometry_in GEOMETRY)
-RETURNS TABLE(city TEXT) AS $$
+RETURNS TABLE(city_out TEXT) AS $$
 BEGIN
   RETURN QUERY
   SELECT poly.city
     FROM osm_polygon AS poly
-    WHERE st_dwithin(geometry, geometry_in, 1000)
+    WHERE city IS NOT NULL 
+	      AND city = '' IS FALSE
+	      AND st_dwithin(geometry, geometry_in, 1000)
     ORDER BY st_distance(geometry, geometry_in) ASC
     LIMIT 1;
 END;
@@ -42,12 +48,14 @@ $$ LANGUAGE plpgsql IMMUTABLE;
 --Street Functions
 DROP FUNCTION IF EXISTS nearest_street_get_name(BIGINT, geometry);
 CREATE FUNCTION nearest_street_get_name(parent_id_in BIGINT, geometry_in GEOMETRY)
-RETURNS TABLE(streetName TEXT) AS $$
+RETURNS TABLE(streetName_out TEXT) AS $$
 BEGIN
   RETURN QUERY
   SELECT street.streetName
     FROM osm_linestring AS street
     WHERE parent_id = parent_id_in
+		  AND streetName IS NOT NULL 
+		  AND streetName = '' IS FALSE
           AND st_dwithin(geometry, geometry_in, 1000)
     ORDER BY st_distance(geometry, geometry_in) ASC
     LIMIT 1;
@@ -56,12 +64,14 @@ $$ LANGUAGE plpgsql IMMUTABLE;
 
 DROP FUNCTION IF EXISTS nearest_street_get_post(geometry);
 CREATE FUNCTION nearest_street_get_post(geometry_in GEOMETRY)
-RETURNS TABLE(postCode TEXT) AS $$
+RETURNS TABLE(postCode_out TEXT) AS $$
 BEGIN
   RETURN QUERY
   SELECT street.postCode
     FROM osm_linestring AS street
-    WHERE st_dwithin(geometry, geometry_in, 1000)
+    WHERE postCode IS NOT NULL 
+	      AND postCode = '' IS FALSE
+	      AND st_dwithin(geometry, geometry_in, 1000)
     ORDER BY st_distance(geometry, geometry_in) ASC
     LIMIT 1;
 END;
@@ -69,12 +79,14 @@ $$ LANGUAGE plpgsql IMMUTABLE;
 
 DROP FUNCTION IF EXISTS nearest_street_get_city(geometry);
 CREATE FUNCTION nearest_street_get_city(geometry_in GEOMETRY)
-RETURNS TABLE(city TEXT) AS $$
+RETURNS TABLE(city_out TEXT) AS $$
 BEGIN
   RETURN QUERY
   SELECT street.city
     FROM osm_linestring AS street
-    WHERE st_dwithin(geometry, geometry_in, 1000)
+    WHERE city IS NOT NULL 
+	      AND city = '' IS FALSE
+	      AND st_dwithin(geometry, geometry_in, 1000)
     ORDER BY st_distance(geometry, geometry_in) ASC
     LIMIT 1;
 END;
@@ -84,12 +96,14 @@ $$ LANGUAGE plpgsql IMMUTABLE;
 --Point functions
 DROP FUNCTION IF EXISTS nearest_point_get_post(geometry);
 CREATE FUNCTION nearest_point_get_post(geometry_in GEOMETRY)
-RETURNS TABLE(postCode TEXT) AS $$
+RETURNS TABLE(postCode_out TEXT) AS $$
 BEGIN
   RETURN QUERY
   SELECT p.postCode
     FROM osm_point AS p
-    WHERE st_dwithin(geometry, geometry_in, 1000)
+    WHERE postCode IS NOT NULL 
+	      AND postCode = '' IS FALSE
+	      AND st_dwithin(geometry, geometry_in, 1000)
     ORDER BY st_distance(geometry, geometry_in) ASC
     LIMIT 1;
 END;
@@ -97,19 +111,21 @@ $$ LANGUAGE plpgsql IMMUTABLE;
 
 DROP FUNCTION IF EXISTS nearest_point_get_city(geometry);
 CREATE FUNCTION nearest_point_get_city(geometry_in GEOMETRY)
-RETURNS TABLE(city TEXT) AS $$
+RETURNS TABLE(city_out TEXT) AS $$
 BEGIN
   RETURN QUERY
   SELECT p.city
     FROM osm_point AS p
-    WHERE st_dwithin(geometry, geometry_in, 1000)
+    WHERE city IS NOT NULL 
+	      AND city = '' IS FALSE
+	      AND st_dwithin(geometry, geometry_in, 1000)
     ORDER BY st_distance(geometry, geometry_in) ASC
     LIMIT 1;
 END;
 $$ LANGUAGE plpgsql IMMUTABLE;
 
 
---Last attempt to fill in missing postal_codes by checking if the polygon/string/point is contained in a postal_code boundary regardless of parental hierarchy (for ranks > 18/town)
+--Fill in missing postal_codes by checking if the polygon/linestring/point is contained in a postal_code boundary ignoring parental hierarchy (for ranks > 18/town)
 UPDATE osm_polygon
   SET (postCode) = (SELECT * FROM contained_in_postal_boundary(geometry))
 WHERE postCode IS NULL
@@ -145,7 +161,7 @@ WHERE streetName IS NULL
       AND parent_id IS NOT NULL
 	  AND place_rank > 19;
 
---Fill in missing postal_codes from close-by polygons/streets/nodes regardless of parents (only for ranks > 22/neighbourhood)
+--Last attempt to fill in missing postal_codes from close-by polygons/streets/nodes regardless of parents (only for ranks > 22/neighbourhood)
 --Polygons
 UPDATE osm_polygon
   SET (postCode) = (SELECT * FROM nearest_poly_get_post(geometry))
@@ -193,7 +209,6 @@ UPDATE osm_point
   SET (postCode) = (SELECT * FROM nearest_point_get_post(geometry))
 WHERE postCode IS NULL
 	  AND place_rank > 22;
-
 
 
 --Fill in missing cities from close-by polygons/streets/nodes regardless of parents (only for ranks > 16/city)

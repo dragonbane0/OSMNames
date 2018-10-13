@@ -52,6 +52,12 @@ WHERE street.parent_id = housenumber.parent_id
       AND housenumber.street_id IS NULL
       AND housenumber.normalized_street != '';
 
+DO language plpgsql $$
+BEGIN
+  RAISE NOTICE 'set street id by fully matching names within same parent DONE';
+END
+$$;
+
 -- set street id by fully matching names within range
 UPDATE osm_housenumber AS housenumber
   SET street_id = COALESCE(street.merged_into, street.osm_id),
@@ -61,6 +67,13 @@ WHERE st_dwithin(street.geometry, housenumber.geometry_center, 1000)
       AND street.normalized_name = housenumber.normalized_street
       AND housenumber.street_id IS NULL
       AND housenumber.normalized_street != '';
+
+
+DO language plpgsql $$
+BEGIN
+  RAISE NOTICE 'set street id by fully matching names within range DONE';
+END
+$$;
 
 -- set street id by best matching name within same parent
 UPDATE osm_housenumber

@@ -18,7 +18,7 @@ BEGIN
 
     IF postCode IS NOT NULL AND postCode = '' IS FALSE THEN
 	  finalDisplayNameArray := array_prepend(postCode, finalDisplayNameArray); 
-	  finalDisplayNameArray := array_prepend('21', finalDisplayNameArray);
+	  finalDisplayNameArray := array_prepend('21', finalDisplayNameArray); --rank of 21 is kept here for correct naming order
     END IF;
 
     IF streetName IS NOT NULL AND streetName = '' IS FALSE THEN
