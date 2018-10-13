@@ -20,4 +20,4 @@ This is a fork, please check out the original project page here, all credit goes
 - I omitted several columns from the final tsv data export that are of no use to my project
 - Housenumbers in the housenumbers table are now also sorted by importance and grouped together by their street_id to avoid the cluttered nature it had before. The importance value is derived from the street the housenumbers are associated with
 - The importance value is included in the housenumbers export while other needless columns are omitted. The order and naming of the columns has been adjusted to easily integrate with sphinxsearch which I use twice in my project (once for geoname searching, once for housenumber searching if the user selects a street, as well as reversed geocoding down to the exact housenumber)
--The final display_name is created in a more predictable way with duplicate words filtered out for better readability
+- The final display_name is created in a more predictable way with duplicate words filtered out for better readability
