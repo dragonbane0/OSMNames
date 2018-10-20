@@ -46,6 +46,7 @@ def import_pbf_file():
         "-dbschema-import", settings.get("DB_SCHEMA"),
         "-read", pbf_filepath,
         "-write",
+        "-cache-dir", "/var/newcache",
         "-overwritecache",
     ])
 
