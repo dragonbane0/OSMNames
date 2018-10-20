@@ -101,7 +101,7 @@ BEGIN
     IF current_rank BETWEEN 16 AND 22 THEN
       city := current_name;
       city_rank := current_rank;
-    ELSIF (current_rank BETWEEN 10 AND city_rank) AND (county IS NULL) THEN
+    ELSIF (current_rank BETWEEN 10 AND city_rank) THEN #AND (county IS NULL) removed for more accurate county naming
       county := current_name;
       county_rank := current_rank;
     ELSIF (current_rank BETWEEN 6 AND county_rank) THEN
